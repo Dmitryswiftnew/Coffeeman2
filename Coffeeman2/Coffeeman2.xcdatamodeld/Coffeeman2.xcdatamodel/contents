@@ -9,6 +9,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="photoData" optional="YES" attributeType="Binary"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="drinks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Drink" inverseName="coffeeShop" inverseEntity="Drink"/>
     </entity>
     <entity name="Drink" representedClassName="Drink" syncable="YES">

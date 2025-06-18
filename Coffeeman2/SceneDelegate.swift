@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        let mainVC = MainViewController() // главные экран создадим позже
+        let mainVC = CoffeeShopsViewController() // новый главный экран 
         let navigationController = UINavigationController(rootViewController: mainVC)
         
         window.rootViewController = navigationController

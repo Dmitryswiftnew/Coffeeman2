@@ -2,7 +2,7 @@
 //  CoffeeShop+CoreDataProperties.swift
 //  Coffeeman2
 //
-//  Created by Dmitry on 16.06.25.
+//  Created by Dmitry on 17.06.25.
 //
 //
 
@@ -16,14 +16,15 @@ extension CoffeeShop {
         return NSFetchRequest<CoffeeShop>(entityName: "CoffeeShop")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var name: String?
     @NSManaged public var address: String?
-    @NSManaged public var photoData: Data?
     @NSManaged public var dateAdded: Date?
+    @NSManaged public var id: UUID?
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
+    @NSManaged public var name: String?
+    @NSManaged public var photoData: Data?
     @NSManaged public var rating: Int16
+    @NSManaged public var type: String?
     @NSManaged public var drinks: NSSet?
 
 }

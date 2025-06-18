@@ -20,7 +20,21 @@ class CoffeeShopsViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         initializeFetchedResultsController()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCoffeeShop))
+        
+      
+        
+    
+        
     }
+    
+  
+    @objc func addCoffeeShop() {
+        let addVC = AddCoffeeShopViewController(style: .grouped)
+        navigationController?.pushViewController(addVC, animated: true)
+    }
+
     
     func initializeFetchedResultsController() {
         let fetchRequest: NSFetchRequest<CoffeeShop> = CoffeeShop.fetchRequest()
@@ -65,6 +79,9 @@ class CoffeeShopsViewController: UITableViewController {
         return cell
     }
 }
+
+
+
 
 // MARK: - NSFetchedResultsControllerDelegate
 

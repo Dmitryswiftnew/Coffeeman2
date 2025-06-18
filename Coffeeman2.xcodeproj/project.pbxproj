@@ -19,6 +19,9 @@
 		0A34C3CB2E0017B200014386 /* Drink+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A34C3C72E0017B200014386 /* Drink+CoreDataClass.swift */; };
 		0A34C3CC2E0017B200014386 /* Drink+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A34C3C82E0017B200014386 /* Drink+CoreDataProperties.swift */; };
 		0A34C3CE2E00238C00014386 /* CoffeeShopsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A34C3CD2E00238C00014386 /* CoffeeShopsViewController.swift */; };
+		0A6A66462E01597A00B267B8 /* AddCoffeeShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A66452E01597A00B267B8 /* AddCoffeeShopViewController.swift */; };
+		0A6A66482E01643200B267B8 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A66472E01643200B267B8 /* TextFieldTableViewCell.swift */; };
+		0A6A664A2E0167D700B267B8 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A66492E0167D700B267B8 /* PhotoTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		0A34C3C72E0017B200014386 /* Drink+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Drink+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0A34C3C82E0017B200014386 /* Drink+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Drink+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0A34C3CD2E00238C00014386 /* CoffeeShopsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeShopsViewController.swift; sourceTree = "<group>"; };
+		0A6A66452E01597A00B267B8 /* AddCoffeeShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoffeeShopViewController.swift; sourceTree = "<group>"; };
+		0A6A66472E01643200B267B8 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		0A6A66492E0167D700B267B8 /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,9 @@
 				0A34C3CD2E00238C00014386 /* CoffeeShopsViewController.swift */,
 				0A34C3C32E00033400014386 /* PersistenceManager.swift */,
 				0A34C3AC2DFFFC8400014386 /* SceneDelegate.swift */,
+				0A6A66452E01597A00B267B8 /* AddCoffeeShopViewController.swift */,
+				0A6A66472E01643200B267B8 /* TextFieldTableViewCell.swift */,
+				0A6A66492E0167D700B267B8 /* PhotoTableViewCell.swift */,
 				0A34C3C12E00014100014386 /* MainViewController.swift */,
 				0A34C3B62DFFFC8500014386 /* Assets.xcassets */,
 				0A34C3B82DFFFC8500014386 /* LaunchScreen.storyboard */,
@@ -158,11 +167,14 @@
 				0A34C3CB2E0017B200014386 /* Drink+CoreDataClass.swift in Sources */,
 				0A34C3B52DFFFC8400014386 /* Coffeeman2.xcdatamodeld in Sources */,
 				0A34C3CE2E00238C00014386 /* CoffeeShopsViewController.swift in Sources */,
+				0A6A66482E01643200B267B8 /* TextFieldTableViewCell.swift in Sources */,
 				0A34C3C42E00033400014386 /* PersistenceManager.swift in Sources */,
 				0A34C3AB2DFFFC8400014386 /* AppDelegate.swift in Sources */,
+				0A6A66462E01597A00B267B8 /* AddCoffeeShopViewController.swift in Sources */,
 				0A34C3C92E0017B200014386 /* CoffeeShop+CoreDataClass.swift in Sources */,
 				0A34C3AD2DFFFC8400014386 /* SceneDelegate.swift in Sources */,
 				0A34C3CC2E0017B200014386 /* Drink+CoreDataProperties.swift in Sources */,
+				0A6A664A2E0167D700B267B8 /* PhotoTableViewCell.swift in Sources */,
 				0A34C3C22E00014100014386 /* MainViewController.swift in Sources */,
 				0A34C3CA2E0017B200014386 /* CoffeeShop+CoreDataProperties.swift in Sources */,
 			);
