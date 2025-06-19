@@ -10,6 +10,18 @@ import CoreData
 
 class AddCoffeeShopViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    // список типов кофе
+    
+    let coffeeTypes = ["Эспрессо", "Американо", "Капучино", "Латте", "Мокко", "Флэт Уайт"]
+    // свойства для UIPickerView и UITextField
+    
+    var typePicker = UIPickerView()// UIPickerView для выбора типа кофе
+    var activeTextField: UITextField?  // Текущее активное текстовое поле для связи с UIPickerView
+    
+    
+   
+    
+    
     // MARK: - Перечисление ячеек
     enum AddPlaceCell: Int, CaseIterable {
         case photo = 0
@@ -20,23 +32,39 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
     
     // MARK: - Свойство для хранения данных формы
     
-    var selectedImage:  UIImage?
-    var name: String?
-    var location: String?
-    var type: String?
+    var selectedImage:  UIImage? // Выбранное фото кофейни
+    var name: String? // Название кофейни
+    var location: String?  // Адрес
+    var type: String? // Тип кофе
     
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "New Place"
+        
+        title = "New Place" // Заголовок экрана
+        
+        
+        
+        // Добавляем кнопки Cancel и Save в навигационную панель
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelTapped))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped))
-        tableView.keyboardDismissMode = .onDrag
         
+        
+        tableView.keyboardDismissMode = .onDrag // Скрывать клавиатуру при прокрутке
+        
+        
+        // Регистрируем кастомные ячейки для фото и текстовых полей
         tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: "PhotoCell")
         tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: "TextFieldCell")
-
+        
+        
+        // настраиваем UIPickerView
+        
+        typePicker.dataSource = self
+        typePicker.delegate = self
+        
+ 
         
     }
 
@@ -45,7 +73,7 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
     override func numberOfSections(in tableView: UITableView) -> Int { 1 }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        AddPlaceCell.allCases.count
+        AddPlaceCell.allCases.count // Количество ячеек равно числу элементов enum
     }
 
     
@@ -74,11 +102,24 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
                 }
                 
             case .type:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as! TextFieldTableViewCell
                 cell.textField.placeholder = "Тип кофе"
                 cell.textField.text = type
+                cell.textField.inputView = typePicker // показываем UIPickerView вместо клавиатуры
+                
+                // Создаём toolbar с кнопкой "Готово"
+                   let toolbar = UIToolbar()
+                   toolbar.sizeToFit()
+                   let doneButton = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(donePressed))
+                   toolbar.setItems([doneButton], animated: false)
+                   cell.textField.inputAccessoryView = toolbar
+                
+                
                 cell.onTextChanged = { [weak self] text in
                     self?.type = text
                 }
+                cell.textField.delegate = self
+                return cell
                 
             default: break
             }
@@ -100,6 +141,21 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
+    
+    
+    // закрытие пикера для выбора кофе
+    
+    @objc func donePressed() {
+        // получаем выбранную строку в пикере
+        
+        let selectedRow = typePicker.selectedRow(inComponent: 0)
+        // Устанавливаем текст в активное поле и сохраняем выбранный тип
+        activeTextField?.text = coffeeTypes[selectedRow]
+        type = coffeeTypes[selectedRow]
+        
+        activeTextField?.resignFirstResponder()
+    }
+    
     
     
     // Show Photo
@@ -162,17 +218,21 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
     // MARK: - Actions
     
     @objc func cancelTapped() {
+        
+        dismiss(animated: true) // Закрываем экран без сохранения
     }
     
     
     @objc func saveTapped() {
+        
+        // Проверяем, что все поля заполнены
         guard let name = name, !name.isEmpty,
               let location = location, !location.isEmpty,
               let type = type, !type.isEmpty else {
             showAlert(message: "Пожалуйста, заполните все поля")
             return
         }
-        
+        // Создаём новый объект CoffeeShop в Core Data
         let context = PersistenceManager.shared.context
         let coffeeShop = CoffeeShop(context: context)
         coffeeShop.id = UUID()
@@ -181,13 +241,15 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
         coffeeShop.type = type
         coffeeShop.dateAdded = Date()
         
+        
+        // Сохраняем фото, если выбрано
         if let image = selectedImage {
             coffeeShop.photoData = image.jpegData(compressionQuality: 0.8)
         }
         
         do {
-            try context.save()
-            navigationController?.popToRootViewController(animated: true)
+            try context.save() // Сохраняем в Core Data
+            navigationController?.popToRootViewController(animated: true) // Возвращаемся на главный экран
         } catch {
             showAlert(message: "Ошибка сохранения: \(error.localizedDescription)")
         }
@@ -201,51 +263,56 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
     }
     
 
+}
+
+
+// MARK: - Расширение для UIPickerView
+
+extension AddCoffeeShopViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return coffeeTypes.count
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return coffeeTypes[row]
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        if let textField = activeTextField {
+//            textField.text = coffeeTypes[row]
+//            type = coffeeTypes[row]
+//        }
+//    }
+    
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        activeTextField?.text = coffeeTypes[row] //  coffeeTypes — ваш массив с типами кофе
+        type = coffeeTypes[row] // сохраняем выбранный тип в переменную
     }
-    */
+    
+    
+    
+}
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension AddCoffeeShopViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeTextField = textField
+        if textField == (tableView.cellForRow(at: IndexPath(row:AddPlaceCell.type.rawValue,section: 0)) as? TextFieldTableViewCell)?.textField {
+            // Если поле типа кофе, устанавливаем выбранный элемент в UIPickerView
+            if let selectedType = type, let index = coffeeTypes.firstIndex(of: selectedType) {
+                typePicker.selectRow(index, inComponent: 0, animated: false)
+            }
+        }
     }
-    */
-
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
+    }
 }
