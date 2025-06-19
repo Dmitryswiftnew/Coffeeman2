@@ -74,7 +74,28 @@ class CoffeeShopsViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    // удаление кофейни по свайпу
     
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let coffeeShopToDelete = fetchedResultsController.object(at: indexPath)
+            
+            // получаем контекст Core Data
+            let context = PersistenceManager.shared.context
+            
+        // удаляем объект из контекста
+            
+            context.delete(coffeeShopToDelete)
+            
+            do {
+                // сохраняем изменения в Core Data
+                try context.save()
+            } catch {
+                print("Ошибка при удалении кофейни: \(error.localizedDescription)")
+            }
+        }
+    }
     
     
     // MARK: - UITableViewDataSource
