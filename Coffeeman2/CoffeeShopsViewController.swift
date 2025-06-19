@@ -29,10 +29,11 @@ class CoffeeShopsViewController: UITableViewController {
         
     }
     
-  
+    // Вызов при нажатии на кнопку "+" для добавления новой кофейни
+    
+    
     @objc func addCoffeeShop() {
-        let addVC = AddCoffeeShopViewController(style: .grouped)
-        navigationController?.pushViewController(addVC, animated: true)
+        showAddEditCoffeeShop()
     }
 
     
@@ -56,6 +57,25 @@ class CoffeeShopsViewController: UITableViewController {
             print("Ошибка загрузки кофеен: \(error.localizedDescription)")
         }
     }
+    
+    // Метод для перехода на экран добавления/редактирования кофейни
+    func showAddEditCoffeeShop(coffeeShop: CoffeeShop? = nil) {
+        let addVC = AddCoffeeShopViewController(style: .grouped)
+        addVC.coffeeShopToEdit = coffeeShop // передаем объект для редактирования (nil - для нового)
+        navigationController?.pushViewController(addVC, animated: true)
+    }
+    
+    
+    // Вызов при выборе кофейни из списка
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let coffeeShop = fetchedResultsController.object(at: indexPath)
+        showAddEditCoffeeShop(coffeeShop: coffeeShop) // передаем выбранную кофейню для редактирования
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    
     
     // MARK: - UITableViewDataSource
     

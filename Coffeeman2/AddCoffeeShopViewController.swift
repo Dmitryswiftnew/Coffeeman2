@@ -18,6 +18,8 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
     var typePicker = UIPickerView()// UIPickerView для выбора типа кофе
     var activeTextField: UITextField?  // Текущее активное текстовое поле для связи с UIPickerView
     
+    var coffeeShopToEdit: CoffeeShop? 
+    
     
    
     
@@ -65,6 +67,17 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
         typePicker.delegate = self
         
  
+        if let coffeeShop = coffeeShopToEdit {
+            name = coffeeShop.name
+            location = coffeeShop.address
+            type = coffeeShop.type
+            if let data = coffeeShop.photoData {
+                selectedImage = UIImage( data: data)
+            }
+            
+            title = "Edit Place"
+        }
+        
         
     }
 
@@ -232,14 +245,17 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
             showAlert(message: "Пожалуйста, заполните все поля")
             return
         }
-        // Создаём новый объект CoffeeShop в Core Data
+        
         let context = PersistenceManager.shared.context
-        let coffeeShop = CoffeeShop(context: context)
-        coffeeShop.id = UUID()
+        
+        // если редактируем - обновляемб иначе создаем новый объект
+        
+        let coffeeShop = coffeeShopToEdit ?? CoffeeShop(context: context)
+        
         coffeeShop.name = name
         coffeeShop.address = location
         coffeeShop.type = type
-        coffeeShop.dateAdded = Date()
+        coffeeShop.dateAdded = coffeeShop.dateAdded ?? Date()
         
         
         // Сохраняем фото, если выбрано
@@ -302,17 +318,16 @@ extension AddCoffeeShopViewController: UIPickerViewDelegate, UIPickerViewDataSou
 
 
 extension AddCoffeeShopViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField // Важно: запоминаем активное поле!
+    }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
-        activeTextField = textField
+        activeTextField = nil // Сбрасываем, когда редактирование закончено
         if textField == (tableView.cellForRow(at: IndexPath(row:AddPlaceCell.type.rawValue,section: 0)) as? TextFieldTableViewCell)?.textField {
-            // Если поле типа кофе, устанавливаем выбранный элемент в UIPickerView
             if let selectedType = type, let index = coffeeTypes.firstIndex(of: selectedType) {
                 typePicker.selectRow(index, inComponent: 0, animated: false)
             }
         }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
     }
 }
