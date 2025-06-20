@@ -10,7 +10,7 @@ import CoreData
 
 class CoffeeShopsViewController: UITableViewController {
     
-    // Объявляем правильное имя переменной
+    // NSFetchedResultsController для управления выборкой и обновлением таблицы
     var fetchedResultsController: NSFetchedResultsController<CoffeeShop>!
     
     override func viewDidLoad() {
@@ -19,24 +19,22 @@ class CoffeeShopsViewController: UITableViewController {
         title = "Coffeman"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
+        // Инициализируем fetchedResultsController
         initializeFetchedResultsController()
         
+        // Кнопка "+" для добавления новой кофейни
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCoffeeShop))
         
-      
-        
-    
-        
-    }
-    
-    // Вызов при нажатии на кнопку "+" для добавления новой кофейни
-    
-    
-    @objc func addCoffeeShop() {
-        showAddEditCoffeeShop()
-    }
+        tableView.register(CoffeeShopTableViewCell.self, forCellReuseIdentifier: "CoffeeShopCell") // регистрация ячейки
+        tableView.rowHeight = 70
 
     
+        
+    }
+    
+   
+
+    // Инициализация NSFetchedResultsController с сортировкой по дате добавления
     func initializeFetchedResultsController() {
         let fetchRequest: NSFetchRequest<CoffeeShop> = CoffeeShop.fetchRequest()
         
@@ -58,7 +56,8 @@ class CoffeeShopsViewController: UITableViewController {
         }
     }
     
-    // Метод для перехода на экран добавления/редактирования кофейни
+    // MARK: - Переход на экран добавления/редактирования кофейни
+    
     func showAddEditCoffeeShop(coffeeShop: CoffeeShop? = nil) {
         let addVC = AddCoffeeShopViewController(style: .grouped)
         addVC.coffeeShopToEdit = coffeeShop // передаем объект для редактирования (nil - для нового)
@@ -66,7 +65,16 @@ class CoffeeShopsViewController: UITableViewController {
     }
     
     
-    // Вызов при выборе кофейни из списка
+    // Вызов при нажатии на кнопку "+" для добавления новой кофейни
+    
+    
+    @objc func addCoffeeShop() {
+        showAddEditCoffeeShop()
+    }
+    
+    
+    
+    // Вызов при выборе кофейни из списка для редактирования
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let coffeeShop = fetchedResultsController.object(at: indexPath)
@@ -108,23 +116,24 @@ class CoffeeShopsViewController: UITableViewController {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Используем кастомную ячейку
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CoffeeShopCell", for: indexPath) as! CoffeeShopTableViewCell
         let coffeeShop = fetchedResultsController.object(at: indexPath)
-        
-        // Отображаем название кофейни
-        cell.textLabel?.text = coffeeShop.name
-        
+        cell.configure(with: coffeeShop)
         return cell
     }
+    
+    
 }
 
 
 
 
-// MARK: - NSFetchedResultsControllerDelegate
+// MARK: - NSFetchedResultsControllerDelegate - для автоматического обновления таблицы
 
 extension CoffeeShopsViewController: NSFetchedResultsControllerDelegate {
     
