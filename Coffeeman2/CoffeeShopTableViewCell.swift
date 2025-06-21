@@ -164,6 +164,7 @@ class CoffeeShopTableViewCell: UITableViewCell {
         typeLabel.text = coffeeShop.type?.isEmpty == false ? coffeeShop.type : "Тип не указан"
         addressLabel.text = coffeeShop.address?.isEmpty == false ? coffeeShop.address : "Адрес не указан"
         starRatingView.rating = Int(coffeeShop.rating) // rating — свойство Core Data (Int16 или Int)
+        starRatingView.isEditable = false
     }
     
     

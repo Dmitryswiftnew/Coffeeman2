@@ -15,6 +15,17 @@ protocol StarRatingViewDelegate: AnyObject {
 
 class StarRatingView: UIView {
     
+    var isEditable: Bool = true {
+        didSet {
+            updateUserInteraction()
+        }
+    }
+    
+    // Массив UIImageView для звезд
+    
+    private var starImageViews: [UIImageView] = []
+    
+    
     // макс. кол. звезд
     
     private let maxStars = 5
@@ -31,9 +42,7 @@ class StarRatingView: UIView {
     // делегат для уведомления об изменени рейтинга
     weak var delegate: StarRatingViewDelegate?
     
-    // Массив UIImageView для звезд
-    
-    private var starImageViews: [UIImageView] = []
+   
     
     // Инициализаторы
     override init(frame: CGRect) {
@@ -84,12 +93,42 @@ class StarRatingView: UIView {
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(handleStarTap(_:)))
             imageView.addGestureRecognizer(tap)
+            starImageViews.append(imageView)
             
         }
-        
+        updateUserInteraction()
         updateStars()
         
+        
     }
+    
+   
+
+    private func updateUserInteraction() {
+        for star in starImageViews {
+            star.isUserInteractionEnabled = isEditable
+        }
+    }
+    
+    
+//    private func updateUserInteraction() {
+//           for (index, star) in starImageViews.enumerated() {
+//               star.isUserInteractionEnabled = isEditable
+//               // Включаем или выключаем распознавание жестов
+//               if isEditable {
+//                   if star.gestureRecognizers?.contains(tapGestureRecognizers[index]) == false {
+//                       star.addGestureRecognizer(tapGestureRecognizers[index])
+//                   }
+//               } else {
+//                   if let tap = tapGestureRecognizers[index] as? UITapGestureRecognizer {
+//                       star.removeGestureRecognizer(tap)
+//                   }
+//               }
+//           }
+//       }
+    
+    
+    
     
     
     // Обновляем отображение звёзд в зависимости от рейтинга

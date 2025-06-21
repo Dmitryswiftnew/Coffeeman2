@@ -29,7 +29,7 @@ class CoffeeShopsViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCoffeeShop))
         
         tableView.register(CoffeeShopTableViewCell.self, forCellReuseIdentifier: "CoffeeShopCell") // регистрация ячейки
-        tableView.rowHeight = 70
+        tableView.rowHeight = 75
 
     
         // Настройка searchController

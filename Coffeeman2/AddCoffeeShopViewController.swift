@@ -168,6 +168,7 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
                     starRatingView.widthAnchor.constraint(equalToConstant: 250)
                 ])
             }
+            starRatingView.isEditable = true
             return cell
         }
     }
