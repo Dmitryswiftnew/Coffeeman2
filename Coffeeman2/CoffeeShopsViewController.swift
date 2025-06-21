@@ -38,8 +38,10 @@ class CoffeeShopsViewController: UITableViewController {
         searchController.searchBar.placeholder = "Поиск кофеен"
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
+        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
+      
    
     }
  
