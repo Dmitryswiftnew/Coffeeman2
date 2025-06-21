@@ -1,9 +1,3 @@
-//
-//  StarRatingView.swift
-//  Coffeeman2
-//
-//  Created by Dmitry on 21.06.25.
-//
 
 import Foundation
 import UIKit
@@ -77,7 +71,7 @@ class StarRatingView: UIView {
         
         // Создаём звёзды
         
-        for _ in 0..<maxStars {
+        for i in 0..<maxStars {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFit
             imageView.tintColor = .systemYellow
@@ -88,12 +82,13 @@ class StarRatingView: UIView {
             
             imageView.image = UIImage(systemName: "star") // пустая звезда
             imageView.isUserInteractionEnabled = true
+            imageView.tag = i + 1 // tag = 1 для первой звезды, 2 для второй и т.д.
             stack.addArrangedSubview(imageView)
             starImageViews.append(imageView)
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(handleStarTap(_:)))
             imageView.addGestureRecognizer(tap)
-            starImageViews.append(imageView)
+            
             
         }
         updateUserInteraction()
@@ -110,23 +105,7 @@ class StarRatingView: UIView {
         }
     }
     
-    
-//    private func updateUserInteraction() {
-//           for (index, star) in starImageViews.enumerated() {
-//               star.isUserInteractionEnabled = isEditable
-//               // Включаем или выключаем распознавание жестов
-//               if isEditable {
-//                   if star.gestureRecognizers?.contains(tapGestureRecognizers[index]) == false {
-//                       star.addGestureRecognizer(tapGestureRecognizers[index])
-//                   }
-//               } else {
-//                   if let tap = tapGestureRecognizers[index] as? UITapGestureRecognizer {
-//                       star.removeGestureRecognizer(tap)
-//                   }
-//               }
-//           }
-//       }
-    
+
     
     
     
@@ -148,15 +127,14 @@ class StarRatingView: UIView {
     // Обработка нажатия на звезду
     
     @objc private func handleStarTap(_ gesture: UITapGestureRecognizer) {
-        guard let tappedStar = gesture.view as? UIImageView,
-              let index = starImageViews.firstIndex(of: tappedStar) else { return }
+        guard let tappedStar = gesture.view as? UIImageView else { return }
+        let tappedValue = tappedStar.tag // tag = 1...5
         
-        if rating == index + 1 {
-            // Если тапнули на текущую последнюю заполненную звезду — сбрасываем рейтинг
-            rating = 0
+        if rating == tappedValue {
+            rating = 0 // повторное нажатие сбрасывает рейтинг
         } else {
             // Иначе устанавливаем рейтинг по индексу
-            rating = index + 1
+            rating = tappedValue
         }
        
         
