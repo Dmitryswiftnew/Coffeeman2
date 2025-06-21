@@ -23,6 +23,7 @@
 		0A6A66482E01643200B267B8 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A66472E01643200B267B8 /* TextFieldTableViewCell.swift */; };
 		0A6A664A2E0167D700B267B8 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A66492E0167D700B267B8 /* PhotoTableViewCell.swift */; };
 		0A6A664C2E05407500B267B8 /* CoffeeShopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A664B2E05407500B267B8 /* CoffeeShopTableViewCell.swift */; };
+		0A6A664E2E06DE9300B267B8 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A664D2E06DE9300B267B8 /* StarRatingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		0A6A66472E01643200B267B8 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		0A6A66492E0167D700B267B8 /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
 		0A6A664B2E05407500B267B8 /* CoffeeShopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeShopTableViewCell.swift; sourceTree = "<group>"; };
+		0A6A664D2E06DE9300B267B8 /* StarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			children = (
 				0A34C3C52E0017B200014386 /* CoffeeShop+CoreDataClass.swift */,
 				0A34C3C62E0017B200014386 /* CoffeeShop+CoreDataProperties.swift */,
+				0A6A664D2E06DE9300B267B8 /* StarRatingView.swift */,
 				0A34C3C72E0017B200014386 /* Drink+CoreDataClass.swift */,
 				0A34C3C82E0017B200014386 /* Drink+CoreDataProperties.swift */,
 				0A34C3A92DFFFC8400014386 /* Coffeeman2 */,
@@ -175,6 +178,7 @@
 				0A34C3AB2DFFFC8400014386 /* AppDelegate.swift in Sources */,
 				0A6A66462E01597A00B267B8 /* AddCoffeeShopViewController.swift in Sources */,
 				0A34C3C92E0017B200014386 /* CoffeeShop+CoreDataClass.swift in Sources */,
+				0A6A664E2E06DE9300B267B8 /* StarRatingView.swift in Sources */,
 				0A34C3AD2DFFFC8400014386 /* SceneDelegate.swift in Sources */,
 				0A6A664C2E05407500B267B8 /* CoffeeShopTableViewCell.swift in Sources */,
 				0A34C3CC2E0017B200014386 /* Drink+CoreDataProperties.swift in Sources */,

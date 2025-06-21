@@ -12,7 +12,7 @@ import CoreData
 class CoffeeShopTableViewCell: UITableViewCell {
     
     
-    
+    let starRatingView = StarRatingView()
     
     
     // UIImageView для фото кофейни
@@ -79,16 +79,17 @@ class CoffeeShopTableViewCell: UITableViewCell {
         return label
     }()
     
-    // вертикальный стек для текста
-    
-    private let textStack: UIStackView = {
-          let stack = UIStackView()
-          stack.axis = .vertical
-          stack.spacing = 1
-          stack.translatesAutoresizingMaskIntoConstraints = false
-          return stack
-      }()
 
+
+    private let nameAndRatingStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 8
+        stack.alignment = .center
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
     
     
     
@@ -105,31 +106,46 @@ class CoffeeShopTableViewCell: UITableViewCell {
     // Настройка UI элементов и Auto Layout
     
     private func setupViews() {
+        
+        
         contentView.addSubview(photoImageView)
         contentView.addSubview(infoIconLabel)
-        textStack.addArrangedSubview(nameLabel)
-        textStack.addArrangedSubview(typeLabel)
-        textStack.addArrangedSubview(addressLabel)
-        contentView.addSubview(textStack)
-        
-        
-                    
-            NSLayoutConstraint.activate([
-                        photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-                        photoImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                        photoImageView.widthAnchor.constraint(equalToConstant: 60),
-                        photoImageView.heightAnchor.constraint(equalToConstant: 60),
-
-                        infoIconLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-                        infoIconLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                        infoIconLabel.widthAnchor.constraint(equalToConstant: 24),
-                        infoIconLabel.heightAnchor.constraint(equalToConstant: 24),
-
-                        textStack.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: 12),
-                        textStack.trailingAnchor.constraint(equalTo: infoIconLabel.leadingAnchor, constant: -12),
-                        textStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-
+        contentView.addSubview(nameAndRatingStack)
+        contentView.addSubview(typeLabel)
+        contentView.addSubview(addressLabel)
             
+            nameAndRatingStack.addArrangedSubview(nameLabel)
+            nameAndRatingStack.addArrangedSubview(starRatingView)
+            
+            starRatingView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                starRatingView.heightAnchor.constraint(equalToConstant: 20),
+                starRatingView.widthAnchor.constraint(equalToConstant: 100)
+            ])
+        
+        NSLayoutConstraint.activate([
+                photoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+                photoImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                photoImageView.widthAnchor.constraint(equalToConstant: 60),
+                photoImageView.heightAnchor.constraint(equalToConstant: 60),
+                
+                infoIconLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+                infoIconLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                infoIconLabel.widthAnchor.constraint(equalToConstant: 24),
+                infoIconLabel.heightAnchor.constraint(equalToConstant: 24),
+                
+                nameAndRatingStack.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: 12),
+                nameAndRatingStack.trailingAnchor.constraint(equalTo: infoIconLabel.leadingAnchor, constant: -12),
+                nameAndRatingStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+                
+                typeLabel.topAnchor.constraint(equalTo: nameAndRatingStack.bottomAnchor, constant: 4),
+                typeLabel.leadingAnchor.constraint(equalTo: nameAndRatingStack.leadingAnchor),
+                typeLabel.trailingAnchor.constraint(equalTo: nameAndRatingStack.trailingAnchor),
+                
+                addressLabel.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 4),
+                addressLabel.leadingAnchor.constraint(equalTo: typeLabel.leadingAnchor),
+                addressLabel.trailingAnchor.constraint(equalTo: typeLabel.trailingAnchor),
+                addressLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -8)
             
         ])
         
@@ -147,7 +163,7 @@ class CoffeeShopTableViewCell: UITableViewCell {
         nameLabel.text = coffeeShop.name ?? "Без названия"
         typeLabel.text = coffeeShop.type?.isEmpty == false ? coffeeShop.type : "Тип не указан"
         addressLabel.text = coffeeShop.address?.isEmpty == false ? coffeeShop.address : "Адрес не указан"
-        
+        starRatingView.rating = Int(coffeeShop.rating) // rating — свойство Core Data (Int16 или Int)
     }
     
     

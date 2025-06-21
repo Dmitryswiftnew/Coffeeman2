@@ -1,14 +1,12 @@
-//
-//  AddCoffeeShopViewController.swift
-//  Coffeeman2
-//
-//  Created by Dmitry on 17.06.25.
-//
 
 import UIKit
 import CoreData
 
-class AddCoffeeShopViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddCoffeeShopViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, StarRatingViewDelegate {
+   
+    
+    
+    let starRatingView = StarRatingView()
     
     // список типов кофе
     
@@ -18,7 +16,8 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
     var typePicker = UIPickerView()// UIPickerView для выбора типа кофе
     var activeTextField: UITextField?  // Текущее активное текстовое поле для связи с UIPickerView
     
-    var coffeeShopToEdit: CoffeeShop? 
+    var coffeeShopToEdit: CoffeeShop?
+    
     
     
    
@@ -30,6 +29,7 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
         case name
         case location
         case type
+        case rating
     }
     
     // MARK: - Свойство для хранения данных формы
@@ -38,7 +38,7 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
     var name: String? // Название кофейни
     var location: String?  // Адрес
     var type: String? // Тип кофе
-    
+    var currentRating: Int = 0 // свойство для хранения рейтинга
     
 
     override func viewDidLoad() {
@@ -79,8 +79,27 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
         }
         
         
+        // установка текущего рейтинга
+        if let coffeeShop = coffeeShopToEdit {
+            currentRating = Int(coffeeShop.rating)
+            starRatingView.rating = currentRating
+        }
+        
+        // делегат для обновления рейтинга
+        
+        starRatingView.delegate = self
+        
+        
     }
 
+    // метод делегата для starRatingView
+    
+    func starRatingView(_ starRatingView: StarRatingView, didUpdate rating: Int) {
+        // Здесь сохраняем новый рейтинг в локальное свойство контроллера, чтобы потом при сохранении в Core Data записать его
+        self.currentRating = rating
+    }
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int { 1 }
@@ -92,55 +111,67 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellType = AddPlaceCell(rawValue: indexPath.row)!
+        
         switch cellType {
         case .photo:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! PhotoTableViewCell
             cell.photoImageView.image = selectedImage ?? UIImage(systemName: "photo")
             return cell
-        case .name, .location, .type:
+            
+        case .name:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as! TextFieldTableViewCell
-            
-            switch cellType {
-            case .name:
-                cell.textField.placeholder = "Название кофейни"
-                cell.textField.text = name
-                cell.onTextChanged = { [weak self] text in
-                    self?.name = text
-                }
-            case .location:
-                cell.textField.placeholder = "Адрес"
-                cell.textField.text = location
-                cell.onTextChanged = { [weak self] text in
-                    self?.location = text
-                }
-                
-            case .type:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as! TextFieldTableViewCell
-                cell.textField.placeholder = "Тип кофе"
-                cell.textField.text = type
-                cell.textField.inputView = typePicker // показываем UIPickerView вместо клавиатуры
-                
-                // Создаём toolbar с кнопкой "Готово"
-                   let toolbar = UIToolbar()
-                   toolbar.sizeToFit()
-                   let doneButton = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(donePressed))
-                   toolbar.setItems([doneButton], animated: false)
-                   cell.textField.inputAccessoryView = toolbar
-                
-                
-                cell.onTextChanged = { [weak self] text in
-                    self?.type = text
-                }
-                cell.textField.delegate = self
-                return cell
-                
-            default: break
+            cell.textField.placeholder = "Название кофейни"
+            cell.textField.text = name
+            cell.onTextChanged = { [weak self] text in
+                self?.name = text
             }
-            
             return cell
             
+        case .location:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as! TextFieldTableViewCell
+            cell.textField.placeholder = "Адрес"
+            cell.textField.text = location
+            cell.onTextChanged = { [weak self] text in
+                self?.location = text
+            }
+            return cell
+            
+        case .type:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as! TextFieldTableViewCell
+            cell.textField.placeholder = "Тип кофе"
+            cell.textField.text = type
+            cell.textField.inputView = typePicker
+            
+            let toolbar = UIToolbar()
+            toolbar.sizeToFit()
+            let doneButton = UIBarButtonItem(title: "Готово", style: .plain, target: self, action: #selector(donePressed))
+            toolbar.setItems([doneButton], animated: false)
+            cell.textField.inputAccessoryView = toolbar
+            
+            cell.onTextChanged = { [weak self] text in
+                self?.type = text
+            }
+            cell.textField.delegate = self
+            return cell
+            
+        case .rating:
+            let cell = UITableViewCell()
+            cell.selectionStyle = .none
+            
+            if starRatingView.superview == nil {
+                starRatingView.translatesAutoresizingMaskIntoConstraints = false
+                cell.contentView.addSubview(starRatingView)
+                NSLayoutConstraint.activate([
+                    starRatingView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
+                    starRatingView.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor), // центруем по горизонтали
+                    starRatingView.heightAnchor.constraint(equalToConstant: 60),
+                    starRatingView.widthAnchor.constraint(equalToConstant: 250)
+                ])
+            }
+            return cell
         }
     }
+
              
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -256,6 +287,7 @@ class AddCoffeeShopViewController: UITableViewController, UIImagePickerControlle
         coffeeShop.address = location
         coffeeShop.type = type
         coffeeShop.dateAdded = coffeeShop.dateAdded ?? Date()
+        coffeeShop.rating = Int16(currentRating)
         
         
         // Сохраняем фото, если выбрано
@@ -298,14 +330,7 @@ extension AddCoffeeShopViewController: UIPickerViewDelegate, UIPickerViewDataSou
         return coffeeTypes[row]
     }
     
-//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        if let textField = activeTextField {
-//            textField.text = coffeeTypes[row]
-//            type = coffeeTypes[row]
-//        }
-//    }
-    
-    
+
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         activeTextField?.text = coffeeTypes[row] //  coffeeTypes — ваш массив с типами кофе
