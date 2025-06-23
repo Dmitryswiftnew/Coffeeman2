@@ -24,6 +24,9 @@
 		0A6A664A2E0167D700B267B8 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A66492E0167D700B267B8 /* PhotoTableViewCell.swift */; };
 		0A6A664C2E05407500B267B8 /* CoffeeShopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A664B2E05407500B267B8 /* CoffeeShopTableViewCell.swift */; };
 		0A6A664E2E06DE9300B267B8 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A664D2E06DE9300B267B8 /* StarRatingView.swift */; };
+		0A6A66512E096D5B00B267B8 /* MapSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A66502E096D5B00B267B8 /* MapSelectionViewController.swift */; };
+		0A6A66532E096D8D00B267B8 /* MapRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A66522E096D8D00B267B8 /* MapRouteViewController.swift */; };
+		F633AB1348402F2B4573F452 /* Pods_Coffeeman2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EA5D2DDA53D82FB741B5B0 /* Pods_Coffeeman2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +49,11 @@
 		0A6A66492E0167D700B267B8 /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
 		0A6A664B2E05407500B267B8 /* CoffeeShopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeShopTableViewCell.swift; sourceTree = "<group>"; };
 		0A6A664D2E06DE9300B267B8 /* StarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
+		0A6A66502E096D5B00B267B8 /* MapSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSelectionViewController.swift; sourceTree = "<group>"; };
+		0A6A66522E096D8D00B267B8 /* MapRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRouteViewController.swift; sourceTree = "<group>"; };
+		41707A4B32F3A296D3844B25 /* Pods-Coffeeman2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coffeeman2.debug.xcconfig"; path = "Target Support Files/Pods-Coffeeman2/Pods-Coffeeman2.debug.xcconfig"; sourceTree = "<group>"; };
+		74EA5D2DDA53D82FB741B5B0 /* Pods_Coffeeman2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Coffeeman2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9EA78028F4A40D46A70B061 /* Pods-Coffeeman2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Coffeeman2.release.xcconfig"; path = "Target Support Files/Pods-Coffeeman2/Pods-Coffeeman2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F633AB1348402F2B4573F452 /* Pods_Coffeeman2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,8 +76,11 @@
 				0A6A664D2E06DE9300B267B8 /* StarRatingView.swift */,
 				0A34C3C72E0017B200014386 /* Drink+CoreDataClass.swift */,
 				0A34C3C82E0017B200014386 /* Drink+CoreDataProperties.swift */,
+				0A6A664F2E096D2C00B267B8 /* Google Maps */,
 				0A34C3A92DFFFC8400014386 /* Coffeeman2 */,
 				0A34C3A82DFFFC8400014386 /* Products */,
+				2A446BFFF11C9F2EB28F5B37 /* Pods */,
+				DACEA9AB1B33E401BA4F04E9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,6 +112,32 @@
 			path = Coffeeman2;
 			sourceTree = "<group>";
 		};
+		0A6A664F2E096D2C00B267B8 /* Google Maps */ = {
+			isa = PBXGroup;
+			children = (
+				0A6A66502E096D5B00B267B8 /* MapSelectionViewController.swift */,
+				0A6A66522E096D8D00B267B8 /* MapRouteViewController.swift */,
+			);
+			path = "Google Maps";
+			sourceTree = "<group>";
+		};
+		2A446BFFF11C9F2EB28F5B37 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				41707A4B32F3A296D3844B25 /* Pods-Coffeeman2.debug.xcconfig */,
+				D9EA78028F4A40D46A70B061 /* Pods-Coffeeman2.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DACEA9AB1B33E401BA4F04E9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				74EA5D2DDA53D82FB741B5B0 /* Pods_Coffeeman2.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -107,9 +145,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0A34C3BE2DFFFC8500014386 /* Build configuration list for PBXNativeTarget "Coffeeman2" */;
 			buildPhases = (
+				4F2FE7D0BBC63FAD643AEDB0 /* [CP] Check Pods Manifest.lock */,
 				0A34C3A32DFFFC8400014386 /* Sources */,
 				0A34C3A42DFFFC8400014386 /* Frameworks */,
 				0A34C3A52DFFFC8400014386 /* Resources */,
+				6BC696176AF9C3CF45324255 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -165,6 +205,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4F2FE7D0BBC63FAD643AEDB0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Coffeeman2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6BC696176AF9C3CF45324255 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Coffeeman2/Pods-Coffeeman2-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Coffeeman2/Pods-Coffeeman2-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Coffeeman2/Pods-Coffeeman2-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0A34C3A32DFFFC8400014386 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -174,6 +256,7 @@
 				0A34C3B52DFFFC8400014386 /* Coffeeman2.xcdatamodeld in Sources */,
 				0A34C3CE2E00238C00014386 /* CoffeeShopsViewController.swift in Sources */,
 				0A6A66482E01643200B267B8 /* TextFieldTableViewCell.swift in Sources */,
+				0A6A66532E096D8D00B267B8 /* MapRouteViewController.swift in Sources */,
 				0A34C3C42E00033400014386 /* PersistenceManager.swift in Sources */,
 				0A34C3AB2DFFFC8400014386 /* AppDelegate.swift in Sources */,
 				0A6A66462E01597A00B267B8 /* AddCoffeeShopViewController.swift in Sources */,
@@ -182,6 +265,7 @@
 				0A34C3AD2DFFFC8400014386 /* SceneDelegate.swift in Sources */,
 				0A6A664C2E05407500B267B8 /* CoffeeShopTableViewCell.swift in Sources */,
 				0A34C3CC2E0017B200014386 /* Drink+CoreDataProperties.swift in Sources */,
+				0A6A66512E096D5B00B267B8 /* MapSelectionViewController.swift in Sources */,
 				0A6A664A2E0167D700B267B8 /* PhotoTableViewCell.swift in Sources */,
 				0A34C3C22E00014100014386 /* MainViewController.swift in Sources */,
 				0A34C3CA2E0017B200014386 /* CoffeeShop+CoreDataProperties.swift in Sources */,
@@ -318,6 +402,7 @@
 		};
 		0A34C3BF2DFFFC8500014386 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41707A4B32F3A296D3844B25 /* Pods-Coffeeman2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -344,6 +429,7 @@
 		};
 		0A34C3C02DFFFC8500014386 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9EA78028F4A40D46A70B061 /* Pods-Coffeeman2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
